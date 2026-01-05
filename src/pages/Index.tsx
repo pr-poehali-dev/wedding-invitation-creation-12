@@ -5,6 +5,7 @@ import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { Card } from '@/components/ui/card';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
+import { Checkbox } from '@/components/ui/checkbox';
 import Icon from '@/components/ui/icon';
 import { useToast } from '@/hooks/use-toast';
 
@@ -12,10 +13,12 @@ const Index = () => {
   const { toast } = useToast();
   const [formData, setFormData] = useState({
     name: '',
-    email: '',
-    guests: '1',
-    alcohol: 'wine',
-    message: ''
+    attendance: 'solo',
+    partnerName: '',
+    drinks: [] as string[],
+    partnerDrinks: [] as string[],
+    allergies: '',
+    musicTrack: ''
   });
 
   const [timeLeft, setTimeLeft] = useState({
@@ -54,7 +57,25 @@ const Index = () => {
       title: "Спасибо за ответ!",
       description: "Мы получили вашу заявку и свяжемся с вами в ближайшее время.",
     });
-    setFormData({ name: '', email: '', guests: '1', alcohol: 'wine', message: '' });
+    setFormData({ name: '', attendance: 'solo', partnerName: '', drinks: [], partnerDrinks: [], allergies: '', musicTrack: '' });
+  };
+
+  const toggleDrink = (drink: string, isPartner: boolean = false) => {
+    if (isPartner) {
+      setFormData(prev => ({
+        ...prev,
+        partnerDrinks: prev.partnerDrinks.includes(drink)
+          ? prev.partnerDrinks.filter(d => d !== drink)
+          : [...prev.partnerDrinks, drink]
+      }));
+    } else {
+      setFormData(prev => ({
+        ...prev,
+        drinks: prev.drinks.includes(drink)
+          ? prev.drinks.filter(d => d !== drink)
+          : [...prev.drinks, drink]
+      }));
+    }
   };
 
   const sectionRefs = useRef<(HTMLElement | null)[]>([]);
@@ -328,10 +349,10 @@ const Index = () => {
           </div>
 
           <Card className="p-8 md:p-12 border-none shadow-lg">
-            <form onSubmit={handleSubmit} className="space-y-6">
+            <form onSubmit={handleSubmit} className="space-y-8">
               <div>
-                <Label htmlFor="name" className="font-montserrat text-base">
-                  Ваше имя
+                <Label htmlFor="name" className="font-montserrat text-base font-medium">
+                  Ваше имя и фамилия *
                 </Label>
                 <Input
                   id="name"
@@ -344,90 +365,147 @@ const Index = () => {
               </div>
 
               <div>
-                <Label htmlFor="email" className="font-montserrat text-base">
-                  Email
-                </Label>
-                <Input
-                  id="email"
-                  type="email"
-                  value={formData.email}
-                  onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                  required
-                  className="mt-2 font-montserrat"
-                  placeholder="ivan@example.com"
-                />
-              </div>
-
-              <div>
-                <Label htmlFor="guests" className="font-montserrat text-base">
-                  Количество гостей
-                </Label>
-                <Input
-                  id="guests"
-                  type="number"
-                  min="1"
-                  max="5"
-                  value={formData.guests}
-                  onChange={(e) => setFormData({ ...formData, guests: e.target.value })}
-                  required
-                  className="mt-2 font-montserrat"
-                />
-              </div>
-
-              <div>
-                <Label className="font-montserrat text-base mb-3 block">
-                  Какой алкоголь предпочитаете?
+                <Label className="font-montserrat text-base font-medium mb-4 block">
+                  Подтвердите присутствие *
                 </Label>
                 <RadioGroup
-                  value={formData.alcohol}
-                  onValueChange={(value) => setFormData({ ...formData, alcohol: value })}
+                  value={formData.attendance}
+                  onValueChange={(value) => setFormData({ ...formData, attendance: value })}
                   className="space-y-3"
                 >
                   <div className="flex items-center space-x-3">
-                    <RadioGroupItem value="wine" id="wine" />
-                    <Label htmlFor="wine" className="font-montserrat font-normal cursor-pointer">
-                      Вино
+                    <RadioGroupItem value="solo" id="solo" />
+                    <Label htmlFor="solo" className="font-montserrat font-normal cursor-pointer">
+                      Обязательно буду
                     </Label>
                   </div>
                   <div className="flex items-center space-x-3">
-                    <RadioGroupItem value="vodka" id="vodka" />
-                    <Label htmlFor="vodka" className="font-montserrat font-normal cursor-pointer">
-                      Водка
+                    <RadioGroupItem value="couple" id="couple" />
+                    <Label htmlFor="couple" className="font-montserrat font-normal cursor-pointer">
+                      Буду с парой/семьёй
                     </Label>
                   </div>
                   <div className="flex items-center space-x-3">
-                    <RadioGroupItem value="champagne" id="champagne" />
-                    <Label htmlFor="champagne" className="font-montserrat font-normal cursor-pointer">
-                      Шампанское
-                    </Label>
-                  </div>
-                  <div className="flex items-center space-x-3">
-                    <RadioGroupItem value="moonshine" id="moonshine" />
-                    <Label htmlFor="moonshine" className="font-montserrat font-normal cursor-pointer">
-                      Самогон
+                    <RadioGroupItem value="decline" id="decline" />
+                    <Label htmlFor="decline" className="font-montserrat font-normal cursor-pointer">
+                      Не смогу приехать
                     </Label>
                   </div>
                 </RadioGroup>
               </div>
 
-              <div>
-                <Label htmlFor="message" className="font-montserrat text-base">
-                  Пожелания или комментарии
-                </Label>
-                <Textarea
-                  id="message"
-                  value={formData.message}
-                  onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                  className="mt-2 font-montserrat min-h-24"
-                  placeholder="Напишите ваши пожелания..."
-                />
-              </div>
+              {formData.attendance === 'couple' && (
+                <div>
+                  <Label htmlFor="partnerName" className="font-montserrat text-base font-medium">
+                    Имя и фамилия вашей пары/семьи
+                  </Label>
+                  <Input
+                    id="partnerName"
+                    value={formData.partnerName}
+                    onChange={(e) => setFormData({ ...formData, partnerName: e.target.value })}
+                    className="mt-2 font-montserrat"
+                    placeholder="Мария Иванова"
+                  />
+                </div>
+              )}
+
+              {formData.attendance !== 'decline' && (
+                <>
+                  <div>
+                    <Label className="font-montserrat text-base font-medium mb-4 block">
+                      Что предпочитаете из напитков? (можно несколько)
+                    </Label>
+                    <div className="space-y-3">
+                      {[
+                        'Белое сухое вино',
+                        'Белое п/сл вино',
+                        'Красное сухое вино',
+                        'Красное п/сл вино',
+                        'Шампанское',
+                        'Коньяк',
+                        'Виски',
+                        'Водочка',
+                        'Безалкогольные напитки'
+                      ].map((drink) => (
+                        <div key={drink} className="flex items-center space-x-3">
+                          <Checkbox
+                            id={drink}
+                            checked={formData.drinks.includes(drink)}
+                            onCheckedChange={() => toggleDrink(drink)}
+                          />
+                          <Label htmlFor={drink} className="font-montserrat font-normal cursor-pointer">
+                            {drink}
+                          </Label>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+
+                  {formData.attendance === 'couple' && (
+                    <div>
+                      <Label className="font-montserrat text-base font-medium mb-4 block">
+                        Напитки для вашей пары/семьи (можно несколько)
+                      </Label>
+                      <div className="space-y-3">
+                        {[
+                          'Белое сухое вино',
+                          'Белое п/сл вино',
+                          'Красное сухое вино',
+                          'Красное п/сл вино',
+                          'Шампанское',
+                          'Коньяк',
+                          'Виски',
+                          'Водочка',
+                          'Безалкогольные напитки'
+                        ].map((drink) => (
+                          <div key={`partner-${drink}`} className="flex items-center space-x-3">
+                            <Checkbox
+                              id={`partner-${drink}`}
+                              checked={formData.partnerDrinks.includes(drink)}
+                              onCheckedChange={() => toggleDrink(drink, true)}
+                            />
+                            <Label htmlFor={`partner-${drink}`} className="font-montserrat font-normal cursor-pointer">
+                              {drink}
+                            </Label>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+
+                  <div>
+                    <Label htmlFor="allergies" className="font-montserrat text-base font-medium">
+                      Непереносимость продуктов
+                    </Label>
+                    <Textarea
+                      id="allergies"
+                      value={formData.allergies}
+                      onChange={(e) => setFormData({ ...formData, allergies: e.target.value })}
+                      className="mt-2 font-montserrat min-h-20"
+                      placeholder="Если у вас есть отдельная непереносимость продуктов, сообщите об этом"
+                    />
+                  </div>
+
+                  <div>
+                    <Label htmlFor="musicTrack" className="font-montserrat text-base font-medium">
+                      Оставьте свой любимый музыкальный трек
+                    </Label>
+                    <Input
+                      id="musicTrack"
+                      value={formData.musicTrack}
+                      onChange={(e) => setFormData({ ...formData, musicTrack: e.target.value })}
+                      className="mt-2 font-montserrat"
+                      placeholder="Исполнитель - Название трека"
+                    />
+                  </div>
+                </>
+              )}
 
               <Button
                 type="submit"
                 className="w-full font-montserrat text-base py-6 bg-primary hover:bg-primary/90 transition-colors"
               >
-                Подтвердить присутствие
+                Отправить ответ
               </Button>
             </form>
           </Card>
@@ -480,6 +558,71 @@ const Index = () => {
             </p>
             <p className="font-cormorant text-4xl text-foreground">
               Никита & Марта
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section ref={(el) => (sectionRefs.current[4] = el)} className="py-20 px-4 bg-secondary/30 opacity-0">
+        <div className="max-w-4xl mx-auto">
+          <div className="text-center mb-12">
+            <h2 className="font-cormorant text-5xl md:text-6xl text-foreground mb-6">
+              Поделитесь моментами
+            </h2>
+            <p className="font-montserrat text-muted-foreground text-lg max-w-2xl mx-auto">
+              Загружайте свои фотографии с нашей свадьбы — создадим общую галерею памятных моментов
+            </p>
+          </div>
+
+          <Card className="p-8 md:p-12 border-none shadow-lg">
+            <div className="space-y-6">
+              <div className="border-2 border-dashed border-accent/30 rounded-xl p-12 text-center hover:border-accent/50 transition-colors cursor-pointer">
+                <Icon name="Upload" size={48} className="mx-auto mb-4 text-accent" />
+                <h3 className="font-montserrat text-lg font-medium text-foreground mb-2">
+                  Загрузите фотографии
+                </h3>
+                <p className="font-montserrat text-sm text-muted-foreground mb-4">
+                  Перетащите файлы сюда или нажмите для выбора
+                </p>
+                <Input
+                  type="file"
+                  multiple
+                  accept="image/*"
+                  className="hidden"
+                  id="photo-upload"
+                />
+                <Button
+                  type="button"
+                  variant="outline"
+                  className="font-montserrat"
+                  onClick={() => document.getElementById('photo-upload')?.click()}
+                >
+                  Выбрать файлы
+                </Button>
+              </div>
+
+              <div className="text-center">
+                <p className="font-montserrat text-sm text-muted-foreground">
+                  <Icon name="Info" size={16} className="inline mr-2" />
+                  Фотографии появятся в общей галерее после модерации
+                </p>
+              </div>
+            </div>
+          </Card>
+
+          <div className="mt-12">
+            <h3 className="font-cormorant text-3xl text-center text-foreground mb-8">
+              Общая галерея
+            </h3>
+            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+              {[1, 2, 3, 4].map((i) => (
+                <div key={i} className="aspect-square bg-secondary/50 rounded-xl flex items-center justify-center">
+                  <Icon name="Image" size={32} className="text-muted-foreground/30" />
+                </div>
+              ))}
+            </div>
+            <p className="text-center mt-6 font-montserrat text-sm text-muted-foreground">
+              Галерея будет наполняться после свадьбы
             </p>
           </div>
         </div>
