@@ -59,9 +59,9 @@ const Index = () => {
         <div className="text-center animate-fade-in">
           <div className="mb-12">
             <img
-              src="https://cdn.poehali.dev/projects/07684784-e6a1-41da-9459-a62a5418fb84/files/da553bae-d99a-4b4f-87ac-3b46f9ce0aa3.jpg"
+              src="https://cdn.poehali.dev/files/Изображение PNG.png"
               alt="Никита и Марта"
-              className="w-48 h-48 md:w-64 md:h-64 rounded-full object-cover mx-auto mb-8 shadow-xl border-4 border-accent/20"
+              className="w-64 h-64 md:w-80 md:h-80 rounded-full object-cover mx-auto mb-8 shadow-xl border-4 border-accent/20"
             />
           </div>
           <h1 className="font-cormorant text-7xl md:text-8xl lg:text-9xl font-light text-foreground mb-6 tracking-wide">
@@ -275,9 +275,9 @@ const Index = () => {
 
           <div className="mb-12 flex justify-center">
             <img
-              src="https://cdn.poehali.dev/projects/07684784-e6a1-41da-9459-a62a5418fb84/files/475b0b02-eeef-4fbb-b314-133767c05d3b.jpg"
+              src="https://cdn.poehali.dev/files/Изображение PNG.png"
               alt="Никита и Марта"
-              className="w-full max-w-md rounded-2xl object-cover shadow-xl"
+              className="w-full max-w-2xl rounded-2xl object-cover shadow-xl"
             />
           </div>
           <div className="grid md:grid-cols-2 gap-6 max-w-3xl mx-auto">
