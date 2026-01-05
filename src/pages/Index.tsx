@@ -18,6 +18,36 @@ const Index = () => {
     message: ''
   });
 
+  const [timeLeft, setTimeLeft] = useState({
+    days: 0,
+    hours: 0,
+    minutes: 0,
+    seconds: 0
+  });
+
+  useEffect(() => {
+    const weddingDate = new Date('2026-08-12T15:00:00').getTime();
+
+    const updateCountdown = () => {
+      const now = new Date().getTime();
+      const distance = weddingDate - now;
+
+      if (distance > 0) {
+        setTimeLeft({
+          days: Math.floor(distance / (1000 * 60 * 60 * 24)),
+          hours: Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)),
+          minutes: Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60)),
+          seconds: Math.floor((distance % (1000 * 60)) / 1000)
+        });
+      }
+    };
+
+    updateCountdown();
+    const interval = setInterval(updateCountdown, 1000);
+
+    return () => clearInterval(interval);
+  }, []);
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     toast({
@@ -74,6 +104,46 @@ const Index = () => {
           <p className="font-cormorant text-3xl md:text-4xl text-foreground mt-8">
             12 августа 2026
           </p>
+
+          <div className="mt-16 max-w-4xl mx-auto">
+            <p className="font-montserrat text-sm uppercase tracking-widest text-muted-foreground mb-6">
+              До важного дня осталось
+            </p>
+            <div className="grid grid-cols-4 gap-4 md:gap-8">
+              <div className="bg-secondary/50 backdrop-blur-sm rounded-2xl p-4 md:p-6 border border-accent/10">
+                <div className="font-cormorant text-4xl md:text-6xl text-accent font-semibold mb-2">
+                  {timeLeft.days}
+                </div>
+                <div className="font-montserrat text-xs md:text-sm uppercase tracking-wide text-muted-foreground">
+                  Дней
+                </div>
+              </div>
+              <div className="bg-secondary/50 backdrop-blur-sm rounded-2xl p-4 md:p-6 border border-accent/10">
+                <div className="font-cormorant text-4xl md:text-6xl text-accent font-semibold mb-2">
+                  {timeLeft.hours}
+                </div>
+                <div className="font-montserrat text-xs md:text-sm uppercase tracking-wide text-muted-foreground">
+                  Часов
+                </div>
+              </div>
+              <div className="bg-secondary/50 backdrop-blur-sm rounded-2xl p-4 md:p-6 border border-accent/10">
+                <div className="font-cormorant text-4xl md:text-6xl text-accent font-semibold mb-2">
+                  {timeLeft.minutes}
+                </div>
+                <div className="font-montserrat text-xs md:text-sm uppercase tracking-wide text-muted-foreground">
+                  Минут
+                </div>
+              </div>
+              <div className="bg-secondary/50 backdrop-blur-sm rounded-2xl p-4 md:p-6 border border-accent/10">
+                <div className="font-cormorant text-4xl md:text-6xl text-accent font-semibold mb-2">
+                  {timeLeft.seconds}
+                </div>
+                <div className="font-montserrat text-xs md:text-sm uppercase tracking-wide text-muted-foreground">
+                  Секунд
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </section>
 
