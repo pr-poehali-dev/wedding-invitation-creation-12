@@ -114,7 +114,8 @@ export default {
 			},
 			fontFamily: {
 				cormorant: ['Cormorant', 'serif'],
-				montserrat: ['Montserrat', 'sans-serif']
+				montserrat: ['Montserrat', 'sans-serif'],
+				script: ['Great Vibes', 'cursive']
 			}
 		}
 	},

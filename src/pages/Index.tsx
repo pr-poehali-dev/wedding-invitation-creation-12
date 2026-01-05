@@ -94,7 +94,7 @@ const Index = () => {
               className="w-64 h-64 md:w-80 md:h-80 rounded-full object-cover mx-auto mb-8 shadow-xl border-4 border-accent/20"
             />
           </div>
-          <h1 className="font-cormorant text-6xl md:text-7xl lg:text-8xl font-light text-foreground mb-6 tracking-wider italic">
+          <h1 className="font-script text-6xl md:text-7xl lg:text-8xl font-normal text-foreground mb-6 whitespace-nowrap">
             Никита & Марта
           </h1>
           <div className="w-16 h-px bg-accent mx-auto mb-8"></div>
@@ -174,12 +174,16 @@ const Index = () => {
           <Card className="p-8 text-center border-none shadow-sm animate-slide-up [animation-delay:300ms] hover:shadow-md transition-shadow duration-300">
             <Icon name="Shirt" size={40} className="mx-auto mb-4 text-accent" />
             <h3 className="font-cormorant text-3xl mb-3 text-foreground">Дресс-код</h3>
-            <p className="font-montserrat text-muted-foreground text-lg">
+            <p className="font-montserrat text-muted-foreground text-lg mb-4">
               Оттенки коричневого
             </p>
-            <p className="font-montserrat text-sm text-muted-foreground mt-2">
-              Теплая цветовая гамма
-            </p>
+            <div className="flex justify-center gap-3 flex-wrap">
+              <div className="w-10 h-10 rounded-full border-2 border-gray-200 shadow-sm" style={{backgroundColor: '#D2B48C'}} title="Песочный"></div>
+              <div className="w-10 h-10 rounded-full border-2 border-gray-200 shadow-sm" style={{backgroundColor: '#C19A6B'}} title="Верблюжий"></div>
+              <div className="w-10 h-10 rounded-full border-2 border-gray-200 shadow-sm" style={{backgroundColor: '#A0826D'}} title="Бежевый"></div>
+              <div className="w-10 h-10 rounded-full border-2 border-gray-200 shadow-sm" style={{backgroundColor: '#8B7355'}} title="Коричневый"></div>
+              <div className="w-10 h-10 rounded-full border-2 border-gray-200 shadow-sm" style={{backgroundColor: '#6F4E37'}} title="Шоколадный"></div>
+            </div>
           </Card>
         </div>
       </section>
