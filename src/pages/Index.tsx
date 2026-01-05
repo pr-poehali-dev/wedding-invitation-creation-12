@@ -94,7 +94,7 @@ const Index = () => {
               className="w-64 h-64 md:w-80 md:h-80 rounded-full object-cover mx-auto mb-8 shadow-xl border-4 border-accent/20"
             />
           </div>
-          <h1 className="font-cormorant text-7xl md:text-8xl lg:text-9xl font-light text-foreground mb-6 tracking-wide">
+          <h1 className="font-cormorant text-6xl md:text-7xl lg:text-8xl font-light text-foreground mb-6 tracking-wider italic">
             Никита & Марта
           </h1>
           <div className="w-16 h-px bg-accent mx-auto mb-8"></div>
