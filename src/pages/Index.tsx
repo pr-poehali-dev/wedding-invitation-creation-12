@@ -184,7 +184,7 @@ const Index = () => {
         </div>
       </section>
 
-      <section className="py-20 px-4">
+      <section ref={(el) => (sectionRefs.current[0] = el)} className="py-20 px-4 opacity-0">
         <div className="max-w-4xl mx-auto text-center mb-12">
           <h2 className="font-cormorant text-5xl md:text-6xl text-foreground mb-6">
             Программа дня
