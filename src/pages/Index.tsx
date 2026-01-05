@@ -114,6 +114,104 @@ const Index = () => {
         </div>
       </section>
 
+      <section className="py-20 px-4">
+        <div className="max-w-4xl mx-auto text-center mb-12">
+          <h2 className="font-cormorant text-5xl md:text-6xl text-foreground mb-6">
+            Программа дня
+          </h2>
+          <p className="font-montserrat text-muted-foreground text-lg">
+            12 августа 2026
+          </p>
+        </div>
+        
+        <div className="max-w-3xl mx-auto space-y-6">
+          <Card className="p-6 border-none shadow-sm hover:shadow-md transition-shadow duration-300">
+            <div className="flex items-start gap-4">
+              <div className="bg-accent/10 rounded-full p-3 mt-1">
+                <Icon name="Users" size={24} className="text-accent" />
+              </div>
+              <div className="flex-1">
+                <div className="flex justify-between items-start mb-2">
+                  <h3 className="font-cormorant text-2xl text-foreground">Сбор гостей</h3>
+                  <span className="font-montserrat text-lg text-accent font-semibold">15:00</span>
+                </div>
+                <p className="font-montserrat text-muted-foreground">
+                  Встреча гостей, приветственный коктейль
+                </p>
+              </div>
+            </div>
+          </Card>
+
+          <Card className="p-6 border-none shadow-sm hover:shadow-md transition-shadow duration-300">
+            <div className="flex items-start gap-4">
+              <div className="bg-accent/10 rounded-full p-3 mt-1">
+                <Icon name="Heart" size={24} className="text-accent" />
+              </div>
+              <div className="flex-1">
+                <div className="flex justify-between items-start mb-2">
+                  <h3 className="font-cormorant text-2xl text-foreground">Церемония</h3>
+                  <span className="font-montserrat text-lg text-accent font-semibold">16:00</span>
+                </div>
+                <p className="font-montserrat text-muted-foreground">
+                  Торжественная выездная регистрация
+                </p>
+              </div>
+            </div>
+          </Card>
+
+          <Card className="p-6 border-none shadow-sm hover:shadow-md transition-shadow duration-300">
+            <div className="flex items-start gap-4">
+              <div className="bg-accent/10 rounded-full p-3 mt-1">
+                <Icon name="Camera" size={24} className="text-accent" />
+              </div>
+              <div className="flex-1">
+                <div className="flex justify-between items-start mb-2">
+                  <h3 className="font-cormorant text-2xl text-foreground">Фотосессия</h3>
+                  <span className="font-montserrat text-lg text-accent font-semibold">16:30</span>
+                </div>
+                <p className="font-montserrat text-muted-foreground">
+                  Совместные фотографии с гостями
+                </p>
+              </div>
+            </div>
+          </Card>
+
+          <Card className="p-6 border-none shadow-sm hover:shadow-md transition-shadow duration-300">
+            <div className="flex items-start gap-4">
+              <div className="bg-accent/10 rounded-full p-3 mt-1">
+                <Icon name="UtensilsCrossed" size={24} className="text-accent" />
+              </div>
+              <div className="flex-1">
+                <div className="flex justify-between items-start mb-2">
+                  <h3 className="font-cormorant text-2xl text-foreground">Банкет</h3>
+                  <span className="font-montserrat text-lg text-accent font-semibold">17:30</span>
+                </div>
+                <p className="font-montserrat text-muted-foreground">
+                  Праздничный ужин, тосты и поздравления
+                </p>
+              </div>
+            </div>
+          </Card>
+
+          <Card className="p-6 border-none shadow-sm hover:shadow-md transition-shadow duration-300">
+            <div className="flex items-start gap-4">
+              <div className="bg-accent/10 rounded-full p-3 mt-1">
+                <Icon name="Music" size={24} className="text-accent" />
+              </div>
+              <div className="flex-1">
+                <div className="flex justify-between items-start mb-2">
+                  <h3 className="font-cormorant text-2xl text-foreground">Танцы и веселье</h3>
+                  <span className="font-montserrat text-lg text-accent font-semibold">20:00</span>
+                </div>
+                <p className="font-montserrat text-muted-foreground">
+                  Танцевальная программа до утра
+                </p>
+              </div>
+            </div>
+          </Card>
+        </div>
+      </section>
+
       <section ref={(el) => (sectionRefs.current[1] = el)} className="py-20 px-4 opacity-0">
         <div className="max-w-4xl mx-auto text-center mb-12">
           <h2 className="font-cormorant text-5xl md:text-6xl text-foreground mb-6">
