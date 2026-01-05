@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -27,10 +27,43 @@ const Index = () => {
     setFormData({ name: '', email: '', guests: '1', alcohol: 'wine', message: '' });
   };
 
+  const sectionRefs = useRef<(HTMLElement | null)[]>([]);
+
+  useEffect(() => {
+    const observers = sectionRefs.current.map((section, index) => {
+      if (!section) return null;
+      
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('animate-fade-in');
+            }
+          });
+        },
+        { threshold: 0.1 }
+      );
+      
+      observer.observe(section);
+      return observer;
+    });
+
+    return () => {
+      observers.forEach((observer) => observer?.disconnect());
+    };
+  }, []);
+
   return (
     <div className="min-h-screen bg-background">
       <section className="relative min-h-screen flex items-center justify-center px-4 py-20">
         <div className="text-center animate-fade-in">
+          <div className="mb-12">
+            <img
+              src="https://cdn.poehali.dev/projects/07684784-e6a1-41da-9459-a62a5418fb84/files/da553bae-d99a-4b4f-87ac-3b46f9ce0aa3.jpg"
+              alt="Никита и Марта"
+              className="w-48 h-48 md:w-64 md:h-64 rounded-full object-cover mx-auto mb-8 shadow-xl border-4 border-accent/20"
+            />
+          </div>
           <h1 className="font-cormorant text-7xl md:text-8xl lg:text-9xl font-light text-foreground mb-6 tracking-wide">
             Никита & Марта
           </h1>
@@ -81,7 +114,7 @@ const Index = () => {
         </div>
       </section>
 
-      <section className="py-20 px-4">
+      <section ref={(el) => (sectionRefs.current[1] = el)} className="py-20 px-4 opacity-0">
         <div className="max-w-4xl mx-auto text-center mb-12">
           <h2 className="font-cormorant text-5xl md:text-6xl text-foreground mb-6">
             Как добраться
@@ -111,7 +144,7 @@ const Index = () => {
         </div>
       </section>
 
-      <section className="py-20 px-4 bg-secondary/30">
+      <section ref={(el) => (sectionRefs.current[2] = el)} className="py-20 px-4 bg-secondary/30 opacity-0">
         <div className="max-w-2xl mx-auto">
           <div className="text-center mb-12">
             <h2 className="font-cormorant text-5xl md:text-6xl text-foreground mb-6">
@@ -229,7 +262,7 @@ const Index = () => {
         </div>
       </section>
 
-      <section className="py-20 px-4">
+      <section ref={(el) => (sectionRefs.current[3] = el)} className="py-20 px-4 opacity-0">
         <div className="max-w-4xl mx-auto">
           <div className="text-center mb-12">
             <h2 className="font-cormorant text-5xl md:text-6xl text-foreground mb-6">
@@ -240,6 +273,13 @@ const Index = () => {
             </p>
           </div>
 
+          <div className="mb-12 flex justify-center">
+            <img
+              src="https://cdn.poehali.dev/projects/07684784-e6a1-41da-9459-a62a5418fb84/files/475b0b02-eeef-4fbb-b314-133767c05d3b.jpg"
+              alt="Никита и Марта"
+              className="w-full max-w-md rounded-2xl object-cover shadow-xl"
+            />
+          </div>
           <div className="grid md:grid-cols-2 gap-6 max-w-3xl mx-auto">
             <Card className="p-8 text-center border-none shadow-sm hover:shadow-md transition-shadow duration-300">
               <Icon name="Home" size={36} className="mx-auto mb-4 text-accent" />
@@ -260,7 +300,7 @@ const Index = () => {
         </div>
       </section>
 
-      <section className="py-20 px-4 bg-secondary/30">
+      <section ref={(el) => (sectionRefs.current[4] = el)} className="py-20 px-4 bg-secondary/30 opacity-0">
         <div className="max-w-2xl mx-auto text-center">
           <div className="mt-12 pt-12">
             <p className="font-cormorant text-3xl text-foreground mb-4">
